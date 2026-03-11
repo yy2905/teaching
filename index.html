@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teaching | Jat Laam Yiu</title>
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --line: #dfdfd8;
+      --accent: #234b6b;
+      --max: 1000px;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .wrap {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 72px 0 32px;
+    }
+
+    .hero-card,
+    .course-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 36px;
+      margin-bottom: 24px;
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 12px;
+      line-height: 1.15;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+    }
+
+    .lead {
+      max-width: 60ch;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .section {
+      padding: 10px 0 40px;
+    }
+
+    .course-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .course-card {
+      padding: 24px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      background: #edf3f8;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .meta {
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: white;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    footer {
+      padding: 20px 0 50px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-card">
+          <h1>Teaching</h1>
+          <p class="lead">
+            This page collects my current and recent courses. Please visit the individual course page for syllabi, weekly schedules, materials, grading policies, and frequently asked questions.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Current Course</h2>
+        <div class="course-grid">
+          <div class="course-card">
+            <div class="tag">Spring 2026</div>
+            <h3>SOC 1005 · Introduction to Sociology</h3>
+            <div class="meta">Baruch College · FMWA & PMWA</div>
+            <p>
+              Introductory sociology course covering core concepts, inequality, race and ethnicity, gender, deviance, and social institutions.
+            </p>
+            <a class="btn" href="soc1005/">Go to course page</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        © 2026 Jat Laam Yiu
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
