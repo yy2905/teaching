@@ -8,8 +8,8 @@
     :root {
       --bg: #f7f7f4;
       --card: #ffffff;
-      --text: #1e1e1e;
-      --muted: #6b6b6b;
+      --text: #1f2937;
+      --muted: #374151;
       --line: #dfdfd8;
       --accent: #234b6b;
       --accent-2: #a64b2a;
@@ -34,6 +34,10 @@
     }
 
     a:hover { text-decoration: underline; }
+
+    p, li, td, th {
+      color: var(--text);
+    }
 
     .wrap {
       width: min(calc(100% - 32px), var(--max));
@@ -110,6 +114,7 @@
     h1, h2, h3 {
       line-height: 1.15;
       margin: 0 0 12px;
+      color: var(--text);
     }
 
     h1 {
@@ -124,7 +129,7 @@
 
     p.lead {
       font-size: 1.06rem;
-      color: #303030;
+      color: var(--text);
       max-width: 60ch;
     }
 
@@ -202,6 +207,20 @@
       margin-bottom: 6px;
     }
 
+    .item p,
+    .item li {
+      color: var(--text);
+    }
+
+    .item ul {
+      margin: 10px 0 0 18px;
+      padding: 0;
+    }
+
+    .item ul li {
+      margin-bottom: 8px;
+    }
+
     .tag {
       display: inline-block;
       padding: 4px 10px;
@@ -230,10 +249,51 @@
     }
 
     .week-table th {
-      color: var(--muted);
+      color: var(--text);
       font-weight: 700;
       font-size: 0.9rem;
       background: #fbfbf8;
+    }
+
+    .week-table tr.section-row td {
+      background: #f3f1eb;
+      font-weight: 700;
+    }
+
+    a[href$=".pdf"]::before {
+      content: "📄 ";
+    }
+
+    .reading-toggle {
+      margin: 0;
+    }
+
+    .reading-toggle summary {
+      cursor: pointer;
+      color: var(--accent);
+      font-weight: 600;
+      list-style: none;
+    }
+
+    .reading-toggle summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .reading-toggle summary::before {
+      content: "+ ";
+      font-weight: 700;
+    }
+
+    .reading-toggle[open] summary::before {
+      content: "− ";
+    }
+
+    .reading-content {
+      margin-top: 10px;
+    }
+
+    .reading-content p {
+      margin: 0 0 8px;
     }
 
     .notice {
@@ -249,6 +309,26 @@
       padding: 40px 0 60px;
       color: var(--muted);
       font-size: 0.94rem;
+    }
+
+    .back-to-top {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      display: none;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      color: var(--accent);
+      box-shadow: var(--shadow);
+      font-weight: 700;
+      cursor: pointer;
+      z-index: 50;
+    }
+
+    .back-to-top.show {
+      display: inline-block;
     }
 
     @media (max-width: 860px) {
@@ -278,13 +358,14 @@
     }
   </style>
 </head>
-<body>
+<body id="top">
   <header class="topbar">
     <div class="wrap nav">
       <div class="brand">Jat Laam Yiu · Teaching</div>
       <nav class="menu">
         <a href="#courses">Courses</a>
         <a href="#schedule">Schedule</a>
+        <a href="#grading">Course Components</a>
         <a href="#materials">Materials</a>
         <a href="#policies">Policies</a>
         <a href="#faq">FAQ</a>
@@ -304,6 +385,7 @@
           </p>
           <div class="button-row">
             <a class="btn primary" href="#schedule">Go to this week</a>
+            <a class="btn" href="#grading">Course Components</a>
             <a class="btn" href="#faq">Read FAQ</a>
             <a class="btn" href="mailto:yyao1@gradcenter.cuny.edu">Contact</a>
           </div>
@@ -311,7 +393,7 @@
 
         <aside class="hero-side">
           <div>
-            <h2 style="font-size:1.2rem;">Quick info</h2>
+            <h2 style="font-size:1.2rem;">Quick Info</h2>
             <div class="meta-list">
               <div class="meta-item">
                 <strong>Office hours</strong><br />
@@ -328,7 +410,7 @@
             </div>
           </div>
           <div class="notice">
-            Before sending an email: check the syllabus, the assignment instructions, and the FAQ on this page.
+            Before sending an email: check the syllabus, the assignment instructions, the course components, and the FAQ on this page.
           </div>
         </aside>
       </div>
@@ -339,13 +421,13 @@
         <div class="section-head">
           <div>
             <h2>Courses</h2>
-            <div class="muted">List current and past courses here.</div>
+            <div class="muted">Current and recent teaching.</div>
           </div>
         </div>
         <div class="grid-2 course-list">
           <article class="card">
             <span class="tag">Current</span>
-            <h3>SOC 1005 · Intro Sociology (FMMAW & PMWA) </h3>
+            <h3>SOC 1005 · Intro Sociology (FMWA & PMWA)</h3>
             <p>
               Introductory sociology course covering core concepts, inequality, race and ethnicity, gender, deviance, and social institutions.
             </p>
@@ -355,7 +437,7 @@
             <span class="tag">Archive</span>
             <h3>Past Teaching</h3>
             <p>
-              SOC 1005 Intro Sociology, Fall 2023 & 2025, Spring 2024 & 2025
+              SOC 1005 Intro Sociology, Fall 2023 & 2025, Spring 2024 & 2025.
             </p>
             <p class="muted">Baruch College</p>
           </article>
@@ -363,252 +445,6 @@
       </div>
     </section>
 
-<!-- class weekly schedule -->
-    
-<section id="schedule" class="section">
-  <div class="wrap">
-    <div class="section-head">
-      <div>
-        <h2>Weekly Schedule</h2>
-        <div class="muted">Please check this section before emailing questions about readings, class topics, or course pacing.</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <table class="week-table">
-        <thead>
-          <tr>
-            <th>Week & Date</th>
-            <th>Main Concepts / Class Description</th>
-            <th>All Required Readings</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Week 1<br>01/26 (M)</td>
-            <td>Introduction to this course and syllabus review</td>
-            <td>After class, please spend some time thinking about the SocioCraft project and signing up for the class activities.</td>
-          </tr>
-          <tr>
-            <td>Week 1<br>01/28 (W)</td>
-            <td>Lecture 1 - Introduction to Sociology</td>
-            <td>· C. Wright Mills, excerpt from “The Promise,” in <em>The Sociological Imagination</em><br>· Textbook Chapter 1</td>
-          </tr>
-
-          <tr>
-            <td>Week 2<br>02/02 (M)</td>
-            <td>Lecture 2 - Research Methods and Ethics</td>
-            <td>· Textbook Chapter 2<br>· Get to know the Stanford Prison Experiment; think about why it is not ethical. Bring questions to class.</td>
-          </tr>
-          <tr>
-            <td>Week 2<br>02/04 (W)</td>
-            <td>Research Ethics (continued) and Craft Project Kickoff<br>Students will work in teams, with the help of peers and the instructor, to finish a SocioCraft on their own.</td>
-            <td>Research Ethics: review<br>SocioCraft handouts to be distributed</td>
-          </tr>
-          <tr>
-            <td>Week 2<br>02/08 (Sun.)</td>
-            <td>Sign up for class-leading discussions and class activities, due at midnight</td>
-            <td>—</td>
-          </tr>
-
-          <tr>
-            <td colspan="3"><strong>SECTION 1: Power and Authority & Culture, Norms, Socialization, and Social Interaction</strong></td>
-          </tr>
-
-          <tr>
-            <td>Week 3<br>02/09 (M)</td>
-            <td>Lecture 3 - Introduction to Power</td>
-            <td>· Textbook Chapter 17.1<br>· Massey, Articles 24 and 32<br>· Foucault, Michel. “Panopticism,” from <em>Discipline and Punish: The Birth of the Prison</em></td>
-          </tr>
-          <tr>
-            <td>Week 3<br>02/11 (W)</td>
-            <td>Lecture 4 - Power in Action: Shaping Culture and Social Interaction</td>
-            <td>· Textbook Chapters 3.1 & 3.2<br>· Massey, Article 10<br>· Erving Goffman, <em>The Presentation of Self in Everyday Life</em>, Introduction (pp. 1–9)<br>· Pierre Bourdieu, “The Forms of Capital”</td>
-          </tr>
-
-          <tr>
-            <td>Week 4<br>02/16 (M)</td>
-            <td>NO CLASS - COLLEGE CLOSED</td>
-            <td>NO CLASS</td>
-          </tr>
-          <tr>
-            <td>Week 4<br>02/18 (W)</td>
-            <td>Class Activity 1 - Student-Led Discussion of Section 1</td>
-            <td>Materials to be distributed<br>Students who signed up for this activity must take responsibility for the role play and prepare questions for their classmates. Students in the audience must engage in the activity by responding to the role play and decisions made based on our lectures and discussions.</td>
-          </tr>
-          <tr>
-            <td>Week 4<br>02/22 (Sun.)</td>
-            <td>SocioCraft Progress Submission (instructions to be distributed), due at midnight</td>
-            <td>—</td>
-          </tr>
-
-          <tr>
-            <td colspan="3"><strong>SECTION 2: Social Structures and Inequality: Race, Gender, Relationships, Family</strong></td>
-          </tr>
-
-          <tr>
-            <td>Week 5<br>02/23 (M)</td>
-            <td>Lecture 5 - Race, Ethnicity, Current Situation of Different Racial Groups, I</td>
-            <td>· Textbook Chapters 11.1, 11.3<br>· A short video about W.E.B. Du Bois: https://www.youtube.com/watch?v=BNoRIvJJKBY <em>· The Power of Double Consciousness</em><br>Massey, Articles 22 and 25</td>
-          </tr>
-          <tr>
-            <td>Week 5<br>02/25 (W)</td>
-            <td>Lecture 6 - Race, Ethnicity, Current Situation of Different Racial Groups, II</td>
-            <td>· Tran, V. C. (2024). “Asian American Diversity and Growth.” <em>Annual Review of Sociology</em>, 50.<br>· Erik Love, “Second-Generation Muslim American Advocates and Strategic Racial Identity,” in Mehdi Bozorgmehr and Philip Kasinitz (eds.), <em>· Growing up Muslim in Europe and the United States</em> (2018)<br>Chapter 2, “Intergenerational Bequeathal of Dis/Advantage and the Immigrant Bargain,” from Robert Smith’s <em>Dreams Achieved and Denied</em></td>
-          </tr>
-
-          <tr>
-            <td>Week 6<br>03/02 (M)</td>
-            <td>Lecture 7 - Gender, Sex, Sexuality, Intersectionality</td>
-            <td>· Textbook Chapters 12.1 and 12.2<br>· Introduction: “Woman as Other” in <em>The Second Sex</em> by Simone de Beauvoir<br>Crenshaw, K. W. (2013). · “Mapping the Margins,” in <em>The Public Nature of Private Violence</em></td>
-          </tr>
-          <tr>
-            <td>Week 6<br>03/04 (W)</td>
-            <td>Lecture 8 - Relationships and Family</td>
-            <td>· Textbook Chapter 14<br>· Massey, Articles 40 and 42<br>· Vidales, Guadalupe T. “Arrested Justice: The Multifaceted Plight of Immigrant Latinas Who Faced Domestic Violence.” <em>Journal of Family Violence</em> 25 (2010): 533–544.</td>
-          </tr>
-
-          <tr>
-            <td>Week 7<br>03/09 (M)</td>
-            <td>Class Activity 2 - Student-Led Discussion of Section 2</td>
-            <td>Materials to be distributed<br>Students who signed up for this activity must take responsibility for reading the additional materials for class discussion. Students in the audience must engage in the activity by responding to the paper and answering presenters’ questions.</td>
-          </tr>
-
-          <tr>
-            <td colspan="3"><strong>SECTION 3: Social Control and Resistance: Deviance, Social Control, and Social Movements</strong></td>
-          </tr>
-
-          <tr>
-            <td>Week 7<br>03/11 (W)</td>
-            <td>Lecture 9 - Deviance, Social Control, and Power Elites</td>
-            <td>· Textbook Chapters 7.1 and 7.2<br>· Chapter 3, “Rules for the Distinction of the Normal from the Pathological,” from <em>The Rules of Sociological Method</em> by Emile Durkheim<br><em>· The Power Elite</em> by C. Wright Mills (1956)</td>
-          </tr>
-
-          <tr>
-            <td>Week 8<br>03/16 (M)</td>
-            <td>MIDTERM EXAM</td>
-            <td>—</td>
-          </tr>
-          <tr>
-            <td>Week 8<br>03/18 (W)</td>
-            <td>Lecture 10 - Social Control and Policing, and Race</td>
-            <td>· Du Bois, W. E. B. (2013). “The Spawn of Slavery: The Convict-Lease System in the South.” In <em>Race, Crime, and Justice</em><br>· Wacquant, L. (2017). “From Slavery to Mass Incarceration: Rethinking the ‘Race Question’ in the US.” In <em>Race, Law and Society</em></td>
-          </tr>
-
-          <tr>
-            <td>Week 9<br>03/23 (M)</td>
-            <td>Lecture 11 - Social Movements and Social Change</td>
-            <td>· Textbook Chapter 21<br>· “Social Movements as Politics,” from <em>Social Movements, 1768–2004</em> by Charles Tilly<br>· Introduction: “The Art of Presence,” from <em>Life as Politics</em> by Asef Bayat</td>
-          </tr>
-          <tr>
-            <td>Week 9<br>03/25 (W)</td>
-            <td>Class Activity 3 - Student-Led Discussion of Section 3</td>
-            <td>Materials to be distributed<br>Students who signed up for this activity must take responsibility for reading the additional materials for class discussion. Students in the audience must engage in the activity by responding to the paper and answering presenters’ questions.</td>
-          </tr>
-
-          <tr>
-            <td>Week 10<br>03/30 (M)</td>
-            <td>Midterm Review and SocioCraft Project Workshop</td>
-            <td>Midterm Review and in-class creation/presentation and peer feedback. No readings assigned.</td>
-          </tr>
-          <tr>
-            <td>Week 10<br>04/01 (W)</td>
-            <td>SPRING RECESS - NO CLASS</td>
-            <td>NO CLASS</td>
-          </tr>
-
-          <tr>
-            <td colspan="3"><strong>SECTION 4: Social Inequality and Stratification: Social Stratification, Poverty, and Inequality</strong></td>
-          </tr>
-
-          <tr>
-            <td>Week 11<br>04/06 (M)</td>
-            <td>SPRING RECESS - NO CLASS</td>
-            <td>NO CLASS</td>
-          </tr>
-          <tr>
-            <td>Week 11<br>04/08 (W)</td>
-            <td>SPRING RECESS - NO CLASS</td>
-            <td>NO CLASS</td>
-          </tr>
-
-          <tr>
-            <td>Week 12<br>04/13 (M)</td>
-            <td>Lecture 12 - Social Stratification</td>
-            <td>· Textbook Chapter 9<br>· Davis, K., & Moore, W. E. (2017). “Some Principles of Stratification.” In <em>Kingsley Davis</em></td>
-          </tr>
-          <tr>
-            <td>Week 12<br>04/15 (W)</td>
-            <td>Lecture 13 - Poverty, Inequality in the U.S. and at the Global Level</td>
-            <td>· Textbook Chapter 10<br>· Massey, Articles 15 and 30</td>
-          </tr>
-
-          <tr>
-            <td>Week 13<br>04/20 (M)</td>
-            <td>Lecture 14 - Poverty, Race, and Gender</td>
-            <td>· Massey, Article 21<br>“Work, Family, and Black Women’s Oppression,” from <em>Black Feminist Thought</em> by Patricia Hill Collins<br>· Chapters 2, 3, and 6 from <em>Evicted: Poverty and Profit in the American City</em> by Matthew Desmond</td>
-          </tr>
-          <tr>
-            <td>Week 13<br>04/22 (W)</td>
-            <td>Class Activity 4 - “Who Gets What? A Role Play on Wealth and Survival” & Student Leading Discussion of Section 4</td>
-            <td>Materials to be distributed<br>Students who signed up for this activity must take responsibility for the role play and prepare questions for their classmates. Students in the audience must engage in the activity by responding to the role play and decisions made based on our lectures and discussions.</td>
-          </tr>
-
-          <tr>
-            <td colspan="3"><strong>SECTION 5: Global and Environmental Sociology: Migration, Population, Urbanization, Aging, and the Environment</strong></td>
-          </tr>
-
-          <tr>
-            <td>Week 14<br>04/27 (M)</td>
-            <td>Lecture 15 - Immigration</td>
-            <td>· Massey, D. S. (1999). “Why Does Immigration Occur?: A Theoretical Synthesis” (pp. 34–52)<br>· De Haas, Myths 7 and 8<br>· Gonzales, R. G. (2011). “Learning to Be Illegal: Undocumented Youth and Shifting Legal Contexts in the Transition to Adulthood.” <em>American Sociological Review</em>, 76(4), 602–619.</td>
-          </tr>
-          <tr>
-            <td>Week 14<br>04/29 (W)</td>
-            <td>Lecture 16 - Population and Aging</td>
-            <td>· Textbook Chapters 13.1 and 20.1<br>· Lam, D. (2011). “How the World Survived the Population Bomb.” <em>Demography</em>, 48, 1231–1262.<br>· Mason, A., Lee, R., & NTA Network. (2022). “Six Ways Population Change Will Affect the Global Economy.” <em>Population and Development Review</em>, 48(1), 51–73.</td>
-          </tr>
-
-          <tr>
-            <td>Week 15<br>05/04 (M)</td>
-            <td>SocioCraft Showcase I: First-round Presentations</td>
-            <td>—</td>
-          </tr>
-          <tr>
-            <td>Week 15<br>05/06 (W)</td>
-            <td>Lecture 17 - Urbanization and Environment (ONLINE CLASS)</td>
-            <td>· Textbook Chapters 20.2 and 20.3<br>· “Why Harlem Is Not a Ghetto,” from <em>Naked City</em> by Sharon Zukin<br>· “The Right to the City,” from <em>Rebel Cities</em> by David Harvey</td>
-          </tr>
-
-          <tr>
-            <td>Week 16<br>05/11 (M)</td>
-            <td>Class Activity 5 - Student Leading Discussion of Section 5</td>
-            <td>Students who signed up for this activity must take responsibility for reading the additional materials for class discussion. Students in the audience must engage in the activity by responding to the paper and answering presenters’ questions.</td>
-          </tr>
-          <tr>
-            <td>Week 16<br>05/13 (W)</td>
-            <td>SocioCraft Showcase II: Second-round Presentations</td>
-            <td>—</td>
-          </tr>
-
-          <tr>
-            <td>Week 17<br>05/18 (M)</td>
-            <td>CLASS DOES NOT MEET</td>
-            <td>Final exam date TBD</td>
-          </tr>
-
-          <tr>
-            <td>Week 18<br>05/25 (M)</td>
-            <td>FINAL GRADE RELEASED</td>
-            <td>—</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- assignments -->
     <section id="grading" class="section">
       <div class="wrap">
         <div class="section-head">
@@ -635,17 +471,15 @@
                 <td>Each student may miss up to 2 class meetings without penalty. For example, if the class meets 30 times, attendance will be calculated based on 28 meetings.</td>
               </tr>
               <tr>
-                  <td><strong>Student-Led Discussion</strong></td>
-                  <td>Students sign up for one discussion slot and help lead class discussion with a short presentation.</td>
-                  <td>10 points</td>
-                  <td>
-                    Sign-up sheet: 2 points<br>
-                    Presentation: 8 points<br>
-                    <a href="examples/Student-Led Discussion PRESENTATION EXAMPLE.pdf" target="_blank">
-                      Presentation example
-                    </a>
-                  </td>
-                </tr>
+                <td><strong>Student-Led Discussion</strong></td>
+                <td>Students sign up for one discussion slot and help lead class discussion with a short presentation.</td>
+                <td>10 points</td>
+                <td>
+                  Sign-up sheet: 2 points<br>
+                  Presentation: 8 points<br>
+                  <a href="examples/Student-Led Discussion PRESENTATION EXAMPLE.pdf" target="_blank">Presentation example</a>
+                </td>
+              </tr>
               <tr>
                 <td><strong>SocioCraft Project</strong></td>
                 <td>A semester-long project that asks students to connect sociological concepts to a creative and collaborative craft-based presentation.</td>
@@ -670,34 +504,485 @@
       </div>
     </section>
 
-<!-- materials -->
-    
+    <section id="schedule" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Weekly Schedule</h2>
+            <div class="muted">Please check this section before emailing questions about readings, class topics, or course pacing.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <table class="week-table">
+            <thead>
+              <tr>
+                <th>Week & Date</th>
+                <th>Main Concepts / Class Description</th>
+                <th>All Required Readings</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Week 1<br>01/26 (M)</td>
+                <td>Introduction to this course and syllabus review</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>After class, please spend some time thinking about the SocioCraft project and signing up for the class activities.</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td>Week 1<br>01/28 (W)</td>
+                <td>Lecture 1 - Introduction to Sociology</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· C. Wright Mills, excerpt from “The Promise,” in <em>The Sociological Imagination</em></p>
+                      <p>· Textbook Chapter 1</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Week 2<br>02/02 (M)</td>
+                <td>Lecture 2 - Research Methods and Ethics</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Textbook Chapter 2</p>
+                      <p>· Get to know the Stanford Prison Experiment; think about why it is not ethical. Bring questions to class.</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td>Week 2<br>02/04 (W)</td>
+                <td>Research Ethics (continued) and Craft Project Kickoff<br>Students will work in teams, with the help of peers and the instructor, to finish a SocioCraft on their own.</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Research Ethics: review</p>
+                      <p>· SocioCraft handouts to be distributed</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td>Week 2<br>02/08 (Sun.)</td>
+                <td>Sign up for class-leading discussions and class activities, due at midnight</td>
+                <td>—</td>
+              </tr>
+
+              <tr class="section-row">
+                <td colspan="3"><strong>SECTION 1: Power and Authority & Culture, Norms, Socialization, and Social Interaction</strong></td>
+              </tr>
+
+              <tr>
+                <td>Week 3<br>02/09 (M)</td>
+                <td>Lecture 3 - Introduction to Power</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Textbook Chapter 17.1</p>
+                      <p>· Massey, Articles 24 and 32</p>
+                      <p>· Foucault, Michel. “Panopticism,” from <em>Discipline and Punish: The Birth of the Prison</em></p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td>Week 3<br>02/11 (W)</td>
+                <td>Lecture 4 - Power in Action: Shaping Culture and Social Interaction</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Textbook Chapters 3.1 & 3.2</p>
+                      <p>· Massey, Article 10</p>
+                      <p>· Erving Goffman, <em>The Presentation of Self in Everyday Life</em>, Introduction (pp. 1–9)</p>
+                      <p>· Pierre Bourdieu, “The Forms of Capital”</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Week 4<br>02/16 (M)</td>
+                <td>NO CLASS - COLLEGE CLOSED</td>
+                <td>NO CLASS</td>
+              </tr>
+              <tr>
+                <td>Week 4<br>02/18 (W)</td>
+                <td>Class Activity 1 - Student-Led Discussion of Section 1</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Materials to be distributed</p>
+                      <p>· Students who signed up for this activity must take responsibility for the role play and prepare questions for their classmates. Students in the audience must engage in the activity by responding to the role play and decisions made based on our lectures and discussions.</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td>Week 4<br>02/22 (Sun.)</td>
+                <td>SocioCraft Progress Submission (instructions to be distributed), due at midnight</td>
+                <td>—</td>
+              </tr>
+
+              <tr class="section-row">
+                <td colspan="3"><strong>SECTION 2: Social Structures and Inequality: Race, Gender, Relationships, Family</strong></td>
+              </tr>
+
+              <tr>
+                <td>Week 5<br>02/23 (M)</td>
+                <td>Lecture 5 - Race, Ethnicity, Current Situation of Different Racial Groups, I</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Textbook Chapters 11.1, 11.3</p>
+                      <p>· A short video about W.E.B. Du Bois: <a href="https://www.youtube.com/watch?v=BNoRIvJJKBY" target="_blank">The Power of Double Consciousness</a></p>
+                      <p>· Massey, Articles 22 and 25</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td>Week 5<br>02/25 (W)</td>
+                <td>Lecture 6 - Race, Ethnicity, Current Situation of Different Racial Groups, II</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Tran, V. C. (2024). “Asian American Diversity and Growth.” <em>Annual Review of Sociology</em>, 50.</p>
+                      <p>· Erik Love, “Second-Generation Muslim American Advocates and Strategic Racial Identity,” in Mehdi Bozorgmehr and Philip Kasinitz (eds.), <em>Growing up Muslim in Europe and the United States</em> (2018)</p>
+                      <p>· Chapter 2, “Intergenerational Bequeathal of Dis/Advantage and the Immigrant Bargain,” from Robert Smith’s <em>Dreams Achieved and Denied</em></p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Week 6<br>03/02 (M)</td>
+                <td>Lecture 7 - Gender, Sex, Sexuality, Intersectionality</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Textbook Chapters 12.1 and 12.2</p>
+                      <p>· Introduction: “Woman as Other” in <em>The Second Sex</em> by Simone de Beauvoir</p>
+                      <p>· Crenshaw, K. W. (2013). “Mapping the Margins,” in <em>The Public Nature of Private Violence</em></p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td>Week 6<br>03/04 (W)</td>
+                <td>Lecture 8 - Relationships and Family</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Textbook Chapter 14</p>
+                      <p>· Massey, Articles 40 and 42</p>
+                      <p>· Vidales, Guadalupe T. “Arrested Justice: The Multifaceted Plight of Immigrant Latinas Who Faced Domestic Violence.” <em>Journal of Family Violence</em> 25 (2010): 533–544.</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Week 7<br>03/09 (M)</td>
+                <td>Class Activity 2 - Student-Led Discussion of Section 2</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Materials to be distributed</p>
+                      <p>· Students who signed up for this activity must take responsibility for reading the additional materials for class discussion. Students in the audience must engage in the activity by responding to the paper and answering presenters’ questions.</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+
+              <tr class="section-row">
+                <td colspan="3"><strong>SECTION 3: Social Control and Resistance: Deviance, Social Control, and Social Movements</strong></td>
+              </tr>
+
+              <tr>
+                <td>Week 7<br>03/11 (W)</td>
+                <td>Lecture 9 - Deviance, Social Control, and Power Elites</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Textbook Chapters 7.1 and 7.2</p>
+                      <p>· Chapter 3, “Rules for the Distinction of the Normal from the Pathological,” from <em>The Rules of Sociological Method</em> by Emile Durkheim</p>
+                      <p>· <em>The Power Elite</em> by C. Wright Mills (1956)</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Week 8<br>03/16 (M)</td>
+                <td>MIDTERM EXAM</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>Week 8<br>03/18 (W)</td>
+                <td>Lecture 10 - Social Control and Policing, and Race</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Du Bois, W. E. B. (2013). “The Spawn of Slavery: The Convict-Lease System in the South.” In <em>Race, Crime, and Justice</em></p>
+                      <p>· Wacquant, L. (2017). “From Slavery to Mass Incarceration: Rethinking the ‘Race Question’ in the US.” In <em>Race, Law and Society</em></p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Week 9<br>03/23 (M)</td>
+                <td>Lecture 11 - Social Movements and Social Change</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Textbook Chapter 21</p>
+                      <p>· “Social Movements as Politics,” from <em>Social Movements, 1768–2004</em> by Charles Tilly</p>
+                      <p>· Introduction: “The Art of Presence,” from <em>Life as Politics</em> by Asef Bayat</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td>Week 9<br>03/25 (W)</td>
+                <td>Class Activity 3 - Student-Led Discussion of Section 3</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Materials to be distributed</p>
+                      <p>· Students who signed up for this activity must take responsibility for reading the additional materials for class discussion. Students in the audience must engage in the activity by responding to the paper and answering presenters’ questions.</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Week 10<br>03/30 (M)</td>
+                <td>Midterm Review and SocioCraft Project Workshop</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Midterm Review and in-class creation/presentation and peer feedback. No readings assigned.</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td>Week 10<br>04/01 (W)</td>
+                <td>SPRING RECESS - NO CLASS</td>
+                <td>NO CLASS</td>
+              </tr>
+
+              <tr class="section-row">
+                <td colspan="3"><strong>SECTION 4: Social Inequality and Stratification: Social Stratification, Poverty, and Inequality</strong></td>
+              </tr>
+
+              <tr>
+                <td>Week 11<br>04/06 (M)</td>
+                <td>SPRING RECESS - NO CLASS</td>
+                <td>NO CLASS</td>
+              </tr>
+              <tr>
+                <td>Week 11<br>04/08 (W)</td>
+                <td>SPRING RECESS - NO CLASS</td>
+                <td>NO CLASS</td>
+              </tr>
+
+              <tr>
+                <td>Week 12<br>04/13 (M)</td>
+                <td>Lecture 12 - Social Stratification</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Textbook Chapter 9</p>
+                      <p>· Davis, K., & Moore, W. E. (2017). “Some Principles of Stratification.” In <em>Kingsley Davis</em></p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td>Week 12<br>04/15 (W)</td>
+                <td>Lecture 13 - Poverty, Inequality in the U.S. and at the Global Level</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Textbook Chapter 10</p>
+                      <p>· Massey, Articles 15 and 30</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Week 13<br>04/20 (M)</td>
+                <td>Lecture 14 - Poverty, Race, and Gender</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Massey, Article 21</p>
+                      <p>· “Work, Family, and Black Women’s Oppression,” from <em>Black Feminist Thought</em> by Patricia Hill Collins</p>
+                      <p>· Chapters 2, 3, and 6 from <em>Evicted: Poverty and Profit in the American City</em> by Matthew Desmond</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td>Week 13<br>04/22 (W)</td>
+                <td>Class Activity 4 - “Who Gets What? A Role Play on Wealth and Survival” & Student Leading Discussion of Section 4</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Materials to be distributed</p>
+                      <p>· Students who signed up for this activity must take responsibility for the role play and prepare questions for their classmates. Students in the audience must engage in the activity by responding to the role play and decisions made based on our lectures and discussions.</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+
+              <tr class="section-row">
+                <td colspan="3"><strong>SECTION 5: Global and Environmental Sociology: Migration, Population, Urbanization, Aging, and the Environment</strong></td>
+              </tr>
+
+              <tr>
+                <td>Week 14<br>04/27 (M)</td>
+                <td>Lecture 15 - Immigration</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Massey, D. S. (1999). “Why Does Immigration Occur?: A Theoretical Synthesis” (pp. 34–52)</p>
+                      <p>· De Haas, Myths 7 and 8</p>
+                      <p>· Gonzales, R. G. (2011). “Learning to Be Illegal: Undocumented Youth and Shifting Legal Contexts in the Transition to Adulthood.” <em>American Sociological Review</em>, 76(4), 602–619.</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td>Week 14<br>04/29 (W)</td>
+                <td>Lecture 16 - Population and Aging</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Textbook Chapters 13.1 and 20.1</p>
+                      <p>· Lam, D. (2011). “How the World Survived the Population Bomb.” <em>Demography</em>, 48, 1231–1262.</p>
+                      <p>· Mason, A., Lee, R., & NTA Network. (2022). “Six Ways Population Change Will Affect the Global Economy.” <em>Population and Development Review</em>, 48(1), 51–73.</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Week 15<br>05/04 (M)</td>
+                <td>SocioCraft Showcase I: First-round Presentations</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>Week 15<br>05/06 (W)</td>
+                <td>Lecture 17 - Urbanization and Environment (ONLINE CLASS)</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Textbook Chapters 20.2 and 20.3</p>
+                      <p>· “Why Harlem Is Not a Ghetto,” from <em>Naked City</em> by Sharon Zukin</p>
+                      <p>· “The Right to the City,” from <em>Rebel Cities</em> by David Harvey</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Week 16<br>05/11 (M)</td>
+                <td>Class Activity 5 - Student Leading Discussion of Section 5</td>
+                <td>
+                  <details class="reading-toggle">
+                    <summary>Click to expand</summary>
+                    <div class="reading-content">
+                      <p>· Students who signed up for this activity must take responsibility for reading the additional materials for class discussion. Students in the audience must engage in the activity by responding to the paper and answering presenters’ questions.</p>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td>Week 16<br>05/13 (W)</td>
+                <td>SocioCraft Showcase II: Second-round Presentations</td>
+                <td>—</td>
+              </tr>
+
+              <tr>
+                <td>Week 17<br>05/18 (M)</td>
+                <td>CLASS DOES NOT MEET</td>
+                <td>Final exam date TBD</td>
+              </tr>
+
+              <tr>
+                <td>Week 18<br>05/25 (M)</td>
+                <td>FINAL GRADE RELEASED</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <section id="materials" class="section">
       <div class="wrap grid-2">
         <div class="card">
           <h2>Materials</h2>
           <div class="resource-list">
             <div class="item">
-  <h3>Syllabus</h3>
-  <p class="muted">
-    <a href="SOC1005FMWA-syllabus.pdf" target="_blank">
-      SOC 1005 – FMWA Syllabus (410 - 525 PM)
-    </a>
-  </p>
-  <p class="muted">
-    <a href="SOC1005PMWA-syllabus.pdf" target="_blank">
-      SOC 1005 – PMWA Syllabus (550 - 705 PM)
-    </a>
-  </p>
-</div>
+              <h3>Syllabus</h3>
+              <p>
+                <a href="SOC1005FMWA-syllabus.pdf" target="_blank">
+                  SOC 1005 – FMWA Syllabus (4:10–5:25 PM)
+                </a>
+              </p>
+              <p>
+                <a href="SOC1005PMWA-syllabus.pdf" target="_blank">
+                  SOC 1005 – PMWA Syllabus (5:50–7:05 PM)
+                </a>
+              </p>
+            </div>
             <div class="item">
               <h3>Assignment Instructions</h3>
-                <ul class="muted">
-                <li>Instructions for the SocioCraft proposal will be attached to the assignment posted on Brightspace. All assignments that do not meet the submission requirements will not be graded and will receive a score of zero. </li>
-                <li>For examples of previous hands-on crafts, please check <a href="#">here</a>.</li>
+              <ul>
+                <li>Instructions for the SocioCraft proposal will be attached to the assignment posted on Brightspace. All assignments that do not meet the submission requirements will not be graded and will receive a score of zero.</li>
+                <li>For examples of previous hands-on crafts, please check <a href="examples/SocioCraft Project EXAMPLE.pdf">here</a>.</li>
                 <li>Instructions and relevant materials for the Student-Led Discussion will be uploaded to Brightspace two weeks before the presentation date.</li>
                 <li>A review guide will be provided for both the midterm and the final exam.</li>
-                </ul>
+              </ul>
             </div>
           </div>
         </div>
@@ -706,20 +991,20 @@
           <h2>Policies</h2>
           <div class="resource-list">
             <div class="item">
-              <h3>Email policy</h3>
-              <p>Please do not email questions already answered in the syllabus, on this page, or in the assignment prompt. Please do not email me on weekends. </p>
+              <h3>Email Policy</h3>
+              <p>Please do not email questions already answered in the syllabus, on this page, or in the assignment prompt. Please do not email me on weekends.</p>
             </div>
             <div class="item">
               <h3>Late Work Policy</h3>
-              <p class="muted">
+              <p>
                 Late submissions are accepted only for the SocioCraft proposal. A late proposal may receive a maximum of 80% of the total points (maximum 4 out of 5).
               </p>
-              <p class="muted">
+              <p>
                 The Student-Led Discussion sign-up must be completed by the posted deadline. Late sign-ups will not receive credit (0 out of 2 points).
               </p>
             </div>
             <div class="item">
-              <h3>File format</h3>
+              <h3>File Format</h3>
               <p>Unless otherwise stated, submit files in the exact format required in the instructions.</p>
             </div>
           </div>
@@ -742,29 +1027,29 @@
           </div>
           <div class="item">
             <h3>Where do I find the slides?</h3>
-            <p>They are all on Brightspace, under CONTENT. </p>
+            <p>They are all on Brightspace, under Content.</p>
           </div>
           <div class="item">
             <h3>Where do I find the assignment instructions?</h3>
-            <p>They are on Brightspace. Either under CONTENT or under ASSIGNMENTS (the submission page). Read the whole instruction page before emailing.</p>
+            <p>They are on Brightspace, either under Content or under Assignments. Read the whole instruction page before emailing.</p>
           </div>
           <div class="item">
             <h3>Can I submit a PDF if the instructions say Word?</h3>
-            <p>NO. Follow the required format exactly unless you have written permission in advance.</p>
+            <p>No. Follow the required format exactly unless you have written permission in advance.</p>
           </div>
           <div class="item">
             <h3>Can I submit work late?</h3>
             <p>Please refer to the Late Work Policy above.</p>
-          </div>           
+          </div>
           <div class="item">
             <h3>I missed class. What should I do?</h3>
-            <p>Check the attendance policy first. Then, check the weekly schedule, review the posted materials, and ask a classmate for notes. Email me for any addtional requests. </p>
+            <p>Check the attendance policy first. Then, check the weekly schedule, review the posted materials, and ask a classmate for notes. Email me for any additional requests.</p>
           </div>
           <div class="item">
             <h3>When will grades be posted?</h3>
-            <p>Grades are usually posted within one week after the assignment due date. Midterm may take slightly longer.</p>
+            <p>Grades are usually posted within one week after the assignment due date. The midterm may take slightly longer.</p>
           </div>
-          <div class="item">          
+          <div class="item">
             <h3>Will grades be curved?</h3>
             <p>Grades in this course are not curved. Your final grade will be based on the total points you earn throughout the semester.</p>
             <p class="muted">Please focus on completing assignments and preparing for exams rather than relying on a curve.</p>
@@ -779,5 +1064,23 @@
       <div>© 2026 Prof. Y. Built for teaching, logistics, and fewer repetitive emails.</div>
     </div>
   </footer>
+
+  <button class="back-to-top" id="backToTop">↑ Top</button>
+
+  <script>
+    const backToTop = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
 </body>
 </html>
